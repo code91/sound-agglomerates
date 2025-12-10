@@ -84,13 +84,13 @@ function populateAgglomeratoSelect() {
   });
 }
 
-// Create piano keyboard (4 octaves)
+// Create piano keyboard (5 octaves)
 function createKeyboard() {
   keyboard.innerHTML = '';
 
-  // Create 4 octaves starting from 2 octaves below selected
+  // Create 5 octaves starting from 2 octaves below selected
   const startNote = (currentOctave - 2) * 12; // Two octaves below for more range
-  const numKeys = 49; // About 4 octaves
+  const numKeys = 61; // About 5 octaves
 
   const whiteKeyPattern = [0, 2, 4, 5, 7, 9, 11]; // C, D, E, F, G, A, B
   const blackKeyPattern = [1, 3, 6, 8, 10]; // C#, D#, F#, G#, A#
