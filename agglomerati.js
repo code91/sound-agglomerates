@@ -138,230 +138,230 @@ const INTERVAL_NAMES = {
 // Keys are agglomerate names, values are objects mapping interval (0-11) to jazz chord symbol
 // "/" or null means no standard chord quality for that combination
 const CHORD_QUALITIES = {
-  // S.T.T. (1-2-2) - based on the table
+  // S.T.T. (1-2-2) - agglomerate notes from root: 0, 1, 3, 5
   "S.T.T": {
-    0: null,              // 1/4 - root (no bass reharmonization)
-    1: null,              // b2/#4
-    2: "Alt7(b6)",        // 2/5
-    3: "7/Maj7",          // 3m/b6
-    4: null,              // 3/6
-    5: "m11",             // 4/7
-    6: null,              // tritone
-    7: "Spanish",         // 5/1
-    8: "Maj7(b9,#11)",    // b6/b2
-    9: "Maj7",            // 6/2
-    10: null,             // m7
-    11: "7"               // 7/3m
+    0: null,              // R,b9,m3,11 - cluster at root
+    1: null,              // b9,9,M3,#11
+    2: "m11(no7)",        // 9,m3,11,5
+    3: null,              // m3,M3,#11,b13 - no 7, m3+M3 clash
+    4: null,              // M3,4,5,13
+    5: "7sus4(no3,no5)",  // 4,#4,b13,m7
+    6: null,              // #4,5,13,maj7
+    7: "7(b13,no3)",      // 5,b13,m7,R
+    8: "Maj7(b9,no3,no5)", // b13,13,maj7,b9
+    9: "m7(9,13,no3,no5)", // 13,m7,R,9
+    10: null,             // m7,maj7,b9,m3 - m7+maj7 clash
+    11: "Maj9(no5)"       // maj7,R,9,M3
   },
 
-  // S.T.4 (1-2-5) - based on the table
+  // S.T.4 (1-2-5) - agglomerate notes from root: 0, 1, 3, 8
   "S.T.4": {
-    0: null,              // root
-    1: null,              // b2
-    2: null,              // 2
-    3: "7/Maj7",          // 3m
-    4: "Lyd(2Triad/1)",   // 3
-    5: "m13",             // 4
-    6: null,              // tritone
-    7: "Phrygian",        // 5
-    8: "Maj7",            // b6
-    9: null,              // 6
-    10: "Min7(b13)",      // m7
-    11: "7(11)"           // 7
+    0: null,              // R,b9,m3,b13
+    1: null,              // b9,9,M3,13
+    2: null,              // 9,m3,4,m7
+    3: null,              // m3,M3,#11,maj7 - m3+M3 clash
+    4: "add4",            // M3,4,5,R
+    5: null,              // 4,#11,b13,b9 - no m3, no m7
+    6: null,              // #4,5,13,9
+    7: "m7(b13)",         // 5,b13,m7,m3
+    8: "Maj7(#5,no5)",    // b13,13,maj7,M3
+    9: null,              // 13,m7,R,4
+    10: null,             // m7,maj7,b9,#11 - m7+maj7 clash
+    11: "Maj9"            // maj7,R,9,5
   },
 
-  // M3.S.T (4-1-2) - based on the table
+  // M3.S.T (4-1-2) - agglomerate notes from root: 0, 4, 5, 7
   "M3.S.T": {
-    0: "Maj7/Min(maj7)",  // 1/4
-    1: null,              // b2
-    2: "m7",              // 2
-    3: null,              // 3m
-    4: "m13",             // 3
-    5: "Maj7(#11)",       // 4
-    6: null,              // tritone
-    7: "Maj7/7",          // 5
-    8: "Min arm",         // b6
-    9: null,              // 6
-    10: "7",              // m7
-    11: null              // 7
+    0: "add4",            // R,M3,4,5 - no 7
+    1: null,              // b9,4,#4,b13
+    2: null,              // 9,#11,5,13 - no m3, no m7
+    3: null,              // m3,5,b13,m7
+    4: "Maj7(#5)",        // M3,b13,13,maj7
+    5: "m7sus4(13,no5)",  // 4,13,m7,R
+    6: null,              // #4,m7,maj7,b9 - m7+maj7 clash
+    7: "Maj9(no3)",       // 5,maj7,R,9
+    8: "m(b9,b13,no5)",   // b13,R,b9,m3
+    9: null,              // 13,b9,9,M3
+    10: "m11(no5)",       // m7,9,m3,11
+    11: null              // maj7,m3,M3,#4 - m3+M3 clash
   },
 
   // Additional common agglomerates with typical jazz voicings
 
-  // S.S.T (1-1-2) - chromatic cluster with tone
+  // S.S.T (1-1-2) - agglomerate notes from root: 0, 1, 2, 4
   "S.S.T": {
-    0: null,
-    1: null,
-    2: "sus(b9)",
-    3: "7(b9)",
-    4: null,
-    5: "m(add9)",
-    6: null,
-    7: "Phryg",
-    8: "Maj7(b9)",
-    9: null,
-    10: null,
-    11: "7(b9,b13)"
+    0: null,              // R,b9,9,M3
+    1: null,              // b9,9,m3,4
+    2: null,              // 9,m3,M3,#11 - m3+M3 clash
+    3: null,              // m3,M3,4,5 - m3+M3 clash
+    4: null,              // M3,4,#4,b13
+    5: null,              // 4,#4,5,13
+    6: null,              // #4,5,b13,m7
+    7: "Maj7(#5,13,no3)", // 5,b13,13,maj7
+    8: "m7(#5,13,no3)",   // b13,13,m7,R
+    9: null,              // 13,m7,b9,9
+    10: null,             // m7,b9,9,m3
+    11: "mMaj7(b9,no5)"   // maj7,R,b9,m3
   },
 
-  // T.S.T (2-1-2) - whole-half pattern
+  // T.S.T (2-1-2) - agglomerate notes from root: 0, 2, 3, 5
   "T.S.T": {
-    0: null,
-    1: null,
-    2: "dim7",
-    3: "m7(b5)",
-    4: "7(b9)",
-    5: "m7",
-    6: null,
-    7: "7",
-    8: null,
-    9: "Maj7",
-    10: "m7",
-    11: null
+    0: null,              // R,9,m3,4
+    1: null,              // b9,9,m3,4
+    2: null,              // 9,M3,4,5 - no dim7
+    3: null,              // m3,4,#4,b13 - no m7, no b5
+    4: null,              // M3,#4,5,13 - no 7, no b9
+    5: "m7sus4(b13,no3)", // 4,5,b13,m7
+    6: null,              // #4,b13,13,m7
+    7: "m7(13,no3)",      // 5,13,m7,R
+    8: null,              // b13,m7,b9,9
+    9: "Maj7(9,13,no3,no5)", // 13,maj7,R,9
+    10: "m7(b9,no5)",     // m7,R,b9,m3
+    11: null              // maj7,b9,9,4
   },
 
-  // T.T.S (2-2-1) - whole-whole-half
+  // T.T.S (2-2-1) - agglomerate notes from root: 0, 2, 4, 5
   "T.T.S": {
-    0: null,
-    1: "Maj7(#11)",
-    2: null,
-    3: "7(#11)",
-    4: null,
-    5: "m9",
-    6: null,
-    7: "9",
-    8: null,
-    9: "6/9",
-    10: null,
-    11: "Maj9"
+    0: null,              // R,9,M3,4
+    1: null,              // b9,m3,4,#4 - no maj7
+    2: null,              // 9,M3,#4,5
+    3: null,              // m3,4,5,b13 - no 7
+    4: null,              // M3,#4,b13,13
+    5: "m7sus4(13,no3)",  // 4,5,13,m7
+    6: null,              // #4,b13,m7,b9
+    7: "Maj7(13,no3)",    // 5,13,maj7,R
+    8: null,              // b13,m7,b9,9
+    9: null,              // 13,maj7,b9,9 - has b9+9 clash
+    10: null,             // m7,b9,9,m3
+    11: null              // maj7,b9,m3,M3 - m3+M3 clash
   },
 
-  // m3.S.T (3-1-2)
+  // m3.S.T (3-1-2) - agglomerate notes from root: 0, 3, 4, 6
   "m3.S.T": {
-    0: "m(maj7)",
-    1: null,
-    2: "m7",
-    3: null,
-    4: "Maj7",
-    5: "m11",
-    6: null,
-    7: "m7/7",
-    8: null,
-    9: "7",
-    10: "m9",
-    11: null
+    0: null,              // R,m3,M3,#4 - m3+M3 clash
+    1: null,              // b9,m3,4,5
+    2: null,              // 9,4,#4,b13 - no m3, no m7
+    3: null,              // m3,#4,5,13
+    4: "m7(#5,no3)",      // M3,5,b13,m7
+    5: "Maj7sus4(#5,no3)", // 4,b13,13,maj7
+    6: null,              // #4,13,m7,b9
+    7: null,              // 5,m7,maj7,b9 - m7+maj7 clash
+    8: null,              // b13,b9,9,m3
+    9: null,              // 13,R,b9,m3 - no 7
+    10: "7(b9,no5)",      // m7,b9,9,M3
+    11: null              // maj7,9,m3,4
   },
 
-  // M3.T.S (4-2-1)
+  // M3.T.S (4-2-1) - agglomerate notes from root: 0, 4, 6, 7
   "M3.T.S": {
-    0: "Maj7",
-    1: null,
-    2: "7",
-    3: null,
-    4: "m7",
-    5: "Maj9",
-    6: null,
-    7: "6",
-    8: "7(#5)",
-    9: null,
-    10: "m(maj7)",
-    11: null
+    0: "add#4",           // R,M3,#4,5 - no 7
+    1: null,              // b9,4,5,b13
+    2: null,              // 9,#4,b13,13 - no 7
+    3: null,              // m3,5,13,m7
+    4: null,              // M3,b13,m7,maj7 - m7+maj7 clash
+    5: "Maj7sus4(13,no3,no5)", // 4,13,maj7,R
+    6: null,              // #4,m7,b9,9
+    7: "Maj7(b9,no3)",    // 5,maj7,b9,9
+    8: null,              // b13,R,9,m3 - no 7
+    9: null,              // 13,b9,9,4
+    10: "7(9,11,no5)",    // m7,9,M3,4
+    11: null              // maj7,m3,4,5
   },
 
-  // T.m3.T (2-3-2) - symmetric diminished
+  // T.m3.T (2-3-2) - agglomerate notes from root: 0, 2, 5, 7
   "T.m3.T": {
-    0: "7",
-    1: null,
-    2: "dim7",
-    3: "m7(b5)",
-    4: null,
-    5: "m7",
-    6: "7(b5)",
-    7: "7",
-    8: null,
-    9: "7(#9)",
-    10: "m7",
-    11: null
+    0: null,              // R,9,4,5 - no 7
+    1: null,              // b9,m3,#4,b13
+    2: "6/9(no7)",        // 9,M3,5,13
+    3: "m7sus4(b13,no5)", // m3,4,b13,m7
+    4: null,              // M3,#4,13,m7
+    5: "m7sus4(no3)",     // 4,5,m7,R
+    6: null,              // #4,b13,maj7,b9 - no 7
+    7: "6/9(no3,no7)",    // 5,13,R,9
+    8: null,              // b13,m7,b9,9
+    9: "Maj9(13,no5)",    // 13,maj7,9,M3
+    10: "m7(11,no5)",     // m7,R,m3,4
+    11: null              // maj7,b9,m3,#4
   },
 
-  // m3.T.T (3-2-2) - minor triad extensions
+  // m3.T.T (3-2-2) - agglomerate notes from root: 0, 3, 5, 7
   "m3.T.T": {
-    0: "m7",
-    1: null,
-    2: "7",
-    3: null,
-    4: "Maj7",
-    5: "m9",
-    6: null,
-    7: "m7",
-    8: null,
-    9: "7(#9)",
-    10: null,
-    11: "Maj7"
+    0: "m(add4,no7)",     // R,m3,4,5
+    1: null,              // b9,m3,#4,b13
+    2: null,              // 9,4,5,13 - no 7
+    3: null,              // m3,#4,b13,m7
+    4: "Maj7(13)",        // M3,5,13,maj7
+    5: "m7sus4(b13,no3)", // 4,b13,m7,R
+    6: null,              // #4,13,m7,b9
+    7: "m7(9,no3)",       // 5,m7,R,9
+    8: null,              // b13,b9,9,m3
+    9: "6/9(no5,no7)",    // 13,R,9,M3
+    10: null,             // m7,b9,9,4
+    11: "Maj9(#11,no5)"   // maj7,9,M3,#4
   },
 
-  // M3.m3.S (4-3-1) - major triad extensions
+  // M3.m3.S (4-3-1) - agglomerate notes from root: 0, 4, 7, 8
   "M3.m3.S": {
-    0: "Maj7",
-    1: null,
-    2: "7",
-    3: null,
-    4: "m7",
-    5: "Maj7(#11)",
-    6: null,
-    7: "6",
-    8: null,
-    9: "7(#9)",
-    10: "m(maj7)",
-    11: null
+    0: "(#5,no7)",        // R,M3,5,b13
+    1: null,              // b9,4,b13,13
+    2: "m7(9,#11,13,no3)", // 9,#4,13,m7
+    3: null,              // m3,5,m7,b9
+    4: "Maj7(#5)",        // M3,b13,maj7,R
+    5: null,              // 4,13,R,b9 - no 7
+    6: null,              // #4,m7,b9,9
+    7: "mMaj7(9)",        // 5,maj7,9,m3
+    8: null,              // b13,b9,9,4
+    9: null,              // 13,b9,M3,4 - no 7
+    10: "m7(9,11,no3,no5)", // m7,9,4,#4
+    11: null              // maj7,m3,#4,5
   },
 
-  // m3.m3.T (3-3-2)
+  // m3.m3.T (3-3-2) - agglomerate notes from root: 0, 3, 6, 8
   "m3.m3.T": {
-    0: "m7(b5)",
-    1: null,
-    2: "dim7",
-    3: null,
-    4: "m7",
-    5: "m9(b5)",
-    6: null,
-    7: "7(b9)",
-    8: null,
-    9: "Maj7",
-    10: null,
-    11: "7(#9)"
+    0: "dim(b13,no7)",    // R,m3,#4,b13
+    1: null,              // b9,m3,5,13
+    2: "m7sus4(b13,9,no3)", // 9,4,b13,m7
+    3: null,              // m3,#4,13,m7
+    4: "7",               // M3,5,m7,R
+    5: "Maj7sus4(b9,#5,no3)", // 4,b13,maj7,b9
+    6: null,              // #4,13,b9,9
+    7: "m7(b9)",          // 5,m7,b9,m3
+    8: null,              // b13,b9,9,4
+    9: "m(11,13,no5,no7)", // 13,R,m3,4
+    10: null,             // m7,b9,m3,#4
+    11: "Maj9sus4(no3)"   // maj7,9,4,5
   },
 
-  // 4.S.T (5-1-2) - quartal voicing
+  // 4.S.T (5-1-2) - agglomerate notes from root: 0, 5, 6, 8
   "4.S.T": {
-    0: "sus4",
-    1: null,
-    2: "7sus4",
-    3: null,
-    4: "Maj7sus",
-    5: "sus(add9)",
-    6: null,
-    7: "sus4",
-    8: null,
-    9: "13sus",
-    10: null,
-    11: "Maj7sus"
+    0: "sus4(#4,b13,no5)", // R,4,#4,b13
+    1: null,              // b9,#4,5,13
+    2: "m7(9,b13,no3)",   // 9,5,b13,m7
+    3: null,              // m3,b13,13,m7
+    4: "m7(13,no3,no5)",  // M3,13,m7,R
+    5: null,              // 4,m7,maj7,b9 - m7+maj7 clash
+    6: null,              // #4,b9,9,m3
+    7: "m(b9,no7)",       // 5,R,b9,m3
+    8: null,              // b13,b9,9,4
+    9: "m(9,11,13,no5,no7)", // 13,9,m3,4
+    10: null,             // m7,m3,4,5
+    11: "Maj7(11,no9)"    // maj7,M3,4,5
   },
 
-  // T.4.S (2-5-1) - sus voicing
+  // T.4.S (2-5-1) - agglomerate notes from root: 0, 2, 7, 8
   "T.4.S": {
-    0: "sus2",
-    1: null,
-    2: "7sus2",
-    3: null,
-    4: "Maj9(no3)",
-    5: "sus2/4",
-    6: null,
-    7: "9sus",
-    8: null,
-    9: "6sus2",
-    10: null,
-    11: "Maj9(no3)"
+    0: "add9(#5,no3,no7)", // R,9,5,b13
+    1: null,              // b9,m3,b13,13
+    2: "m7(9,13,no3,no5)", // 9,M3,13,m7
+    3: null,              // m3,#4,m7,b9
+    4: "Maj7(#11,no5)",   // M3,#4,maj7,R
+    5: "sus4(b9,no7)",    // 4,5,R,b9
+    6: null,              // #4,b13,b9,9
+    7: "m(9,13,no7)",     // 5,13,9,m3
+    8: null,              // b13,m7,m3,4
+    9: "Maj7(11,13,no5)", // 13,maj7,M3,4
+    10: null,             // m7,b9,4,5
+    11: "Maj7(b9,#11)"    // maj7,b9,#4,5
   }
 };
 
