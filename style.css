@@ -28,7 +28,7 @@ body {
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
@@ -190,7 +190,7 @@ select:focus {
 .keyboard {
   display: flex;
   position: relative;
-  height: 160px;
+  height: 140px;
   min-width: fit-content;
   margin: 0 auto;
 }
@@ -202,8 +202,8 @@ select:focus {
 }
 
 .key-white {
-  width: 44px;
-  height: 160px;
+  width: 36px;
+  height: 140px;
   background: var(--white-key);
   border: 1px solid #ccc;
   border-radius: 0 0 4px 4px;
@@ -220,12 +220,12 @@ select:focus {
 }
 
 .key-black {
-  width: 28px;
-  height: 100px;
+  width: 24px;
+  height: 85px;
   background: var(--black-key);
   border-radius: 0 0 3px 3px;
-  margin-left: -14px;
-  margin-right: -14px;
+  margin-left: -12px;
+  margin-right: -12px;
   z-index: 2;
 }
 
