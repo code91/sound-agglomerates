@@ -142,7 +142,7 @@ const CHORD_QUALITIES = {
   "S.T.T": {
     0: null,              // 1/4 - root (no bass reharmonization)
     1: null,              // b2/#4
-    2: "Alt7(b6)",        // 2/5
+    2: "m11(no7)",        // 2/5
     3: "7/Maj7",          // 3m/b6
     4: null,              // 3/6
     5: "m11",             // 4/7
