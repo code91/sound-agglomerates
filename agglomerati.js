@@ -134,4 +134,242 @@ const INTERVAL_NAMES = {
   5: '4'
 };
 
-export { AGGLOMERATI, NOTE_NAMES, NOTE_NAMES_FLAT, NOTE_NAMES_SHARP, MIDDLE_C, INTERVAL_NAMES };
+// Chord quality mappings based on bass interval (semitones from bass up to agglomerate root)
+// Keys are agglomerate names, values are objects mapping interval (0-11) to jazz chord symbol
+// "/" or null means no standard chord quality for that combination
+const CHORD_QUALITIES = {
+  // S.T.T. (1-2-2) - based on the table
+  "S.T.T": {
+    0: null,              // 1/4 - root (no bass reharmonization)
+    1: null,              // b2/#4
+    2: "Alt7(b6)",        // 2/5
+    3: "7/Maj7",          // 3m/b6
+    4: null,              // 3/6
+    5: "m11",             // 4/7
+    6: null,              // tritone
+    7: "Spanish",         // 5/1
+    8: "Maj7(b9,#11)",    // b6/b2
+    9: "Maj7",            // 6/2
+    10: null,             // m7
+    11: "7"               // 7/3m
+  },
+
+  // S.T.4 (1-2-5) - based on the table
+  "S.T.4": {
+    0: null,              // root
+    1: null,              // b2
+    2: null,              // 2
+    3: "7/Maj7",          // 3m
+    4: "Lyd(2Triad/1)",   // 3
+    5: "m13",             // 4
+    6: null,              // tritone
+    7: "Phrygian",        // 5
+    8: "Maj7",            // b6
+    9: null,              // 6
+    10: "Min7(b13)",      // m7
+    11: "7(11)"           // 7
+  },
+
+  // M3.S.T (4-1-2) - based on the table
+  "M3.S.T": {
+    0: "Maj7/Min(maj7)",  // 1/4
+    1: null,              // b2
+    2: "m7",              // 2
+    3: null,              // 3m
+    4: "m13",             // 3
+    5: "Maj7(#11)",       // 4
+    6: null,              // tritone
+    7: "Maj7/7",          // 5
+    8: "Min arm",         // b6
+    9: null,              // 6
+    10: "7",              // m7
+    11: null              // 7
+  },
+
+  // Additional common agglomerates with typical jazz voicings
+
+  // S.S.T (1-1-2) - chromatic cluster with tone
+  "S.S.T": {
+    0: null,
+    1: null,
+    2: "sus(b9)",
+    3: "7(b9)",
+    4: null,
+    5: "m(add9)",
+    6: null,
+    7: "Phryg",
+    8: "Maj7(b9)",
+    9: null,
+    10: null,
+    11: "7(b9,b13)"
+  },
+
+  // T.S.T (2-1-2) - whole-half pattern
+  "T.S.T": {
+    0: null,
+    1: null,
+    2: "dim7",
+    3: "m7(b5)",
+    4: "7(b9)",
+    5: "m7",
+    6: null,
+    7: "7",
+    8: null,
+    9: "Maj7",
+    10: "m7",
+    11: null
+  },
+
+  // T.T.S (2-2-1) - whole-whole-half
+  "T.T.S": {
+    0: null,
+    1: "Maj7(#11)",
+    2: null,
+    3: "7(#11)",
+    4: null,
+    5: "m9",
+    6: null,
+    7: "9",
+    8: null,
+    9: "6/9",
+    10: null,
+    11: "Maj9"
+  },
+
+  // m3.S.T (3-1-2)
+  "m3.S.T": {
+    0: "m(maj7)",
+    1: null,
+    2: "m7",
+    3: null,
+    4: "Maj7",
+    5: "m11",
+    6: null,
+    7: "m7/7",
+    8: null,
+    9: "7",
+    10: "m9",
+    11: null
+  },
+
+  // M3.T.S (4-2-1)
+  "M3.T.S": {
+    0: "Maj7",
+    1: null,
+    2: "7",
+    3: null,
+    4: "m7",
+    5: "Maj9",
+    6: null,
+    7: "6",
+    8: "7(#5)",
+    9: null,
+    10: "m(maj7)",
+    11: null
+  },
+
+  // T.m3.T (2-3-2) - symmetric diminished
+  "T.m3.T": {
+    0: "7",
+    1: null,
+    2: "dim7",
+    3: "m7(b5)",
+    4: null,
+    5: "m7",
+    6: "7(b5)",
+    7: "7",
+    8: null,
+    9: "7(#9)",
+    10: "m7",
+    11: null
+  },
+
+  // m3.T.T (3-2-2) - minor triad extensions
+  "m3.T.T": {
+    0: "m7",
+    1: null,
+    2: "7",
+    3: null,
+    4: "Maj7",
+    5: "m9",
+    6: null,
+    7: "m7",
+    8: null,
+    9: "7(#9)",
+    10: null,
+    11: "Maj7"
+  },
+
+  // M3.m3.S (4-3-1) - major triad extensions
+  "M3.m3.S": {
+    0: "Maj7",
+    1: null,
+    2: "7",
+    3: null,
+    4: "m7",
+    5: "Maj7(#11)",
+    6: null,
+    7: "6",
+    8: null,
+    9: "7(#9)",
+    10: "m(maj7)",
+    11: null
+  },
+
+  // m3.m3.T (3-3-2)
+  "m3.m3.T": {
+    0: "m7(b5)",
+    1: null,
+    2: "dim7",
+    3: null,
+    4: "m7",
+    5: "m9(b5)",
+    6: null,
+    7: "7(b9)",
+    8: null,
+    9: "Maj7",
+    10: null,
+    11: "7(#9)"
+  },
+
+  // 4.S.T (5-1-2) - quartal voicing
+  "4.S.T": {
+    0: "sus4",
+    1: null,
+    2: "7sus4",
+    3: null,
+    4: "Maj7sus",
+    5: "sus(add9)",
+    6: null,
+    7: "sus4",
+    8: null,
+    9: "13sus",
+    10: null,
+    11: "Maj7sus"
+  },
+
+  // T.4.S (2-5-1) - sus voicing
+  "T.4.S": {
+    0: "sus2",
+    1: null,
+    2: "7sus2",
+    3: null,
+    4: "Maj9(no3)",
+    5: "sus2/4",
+    6: null,
+    7: "9sus",
+    8: null,
+    9: "6sus2",
+    10: null,
+    11: "Maj9(no3)"
+  }
+};
+
+// Function to get chord quality for an agglomerate and bass interval
+function getChordQuality(agglomeratoName, bassInterval) {
+  const qualities = CHORD_QUALITIES[agglomeratoName];
+  if (!qualities) return null;
+  return qualities[bassInterval] || null;
+}
+
+export { AGGLOMERATI, NOTE_NAMES, NOTE_NAMES_FLAT, NOTE_NAMES_SHARP, MIDDLE_C, INTERVAL_NAMES, CHORD_QUALITIES, getChordQuality };
