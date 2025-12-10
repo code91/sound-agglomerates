@@ -3,7 +3,8 @@ import { AGGLOMERATI, NOTE_NAMES, NOTE_NAMES_FLAT, INTERVAL_NAMES } from './aggl
 // State
 let currentAgglomerato = AGGLOMERATI[0];
 let currentRoot = 0; // C
-let currentBass = 'none';
+let currentBass = 'none'; // none, root, fifth, fourth
+let bassRoot = 0; // Bass root note (0-11), independent from agglomerate root
 let currentOctave = 4;
 let synth = null;
 
@@ -12,6 +13,7 @@ const agglomeratoSelect = document.getElementById('agglomerato-select');
 const rootSelect = document.getElementById('root-select');
 const octaveSelect = document.getElementById('octave-select');
 const bassRadios = document.querySelectorAll('input[name="bass"]');
+const bassRootSelect = document.getElementById('bass-root-select');
 const keyboard = document.getElementById('keyboard');
 const playBtn = document.getElementById('play-btn');
 const arpeggiateBtn = document.getElementById('arpeggiate-btn');
@@ -161,12 +163,17 @@ function setupEventListeners() {
     createKeyboard();
     updateDisplay();
   });
-  
+
   bassRadios.forEach(radio => {
     radio.addEventListener('change', (e) => {
       currentBass = e.target.value;
       updateDisplay();
     });
+  });
+
+  bassRootSelect.addEventListener('change', (e) => {
+    bassRoot = parseInt(e.target.value);
+    updateDisplay();
   });
   
   playBtn.addEventListener('click', () => playChord());
@@ -184,28 +191,29 @@ function setupEventListeners() {
 // Calculate current pitches
 function getCurrentPitches() {
   const pitches = [];
-  const bassMidi = (currentOctave + 1) * 12 + currentRoot; // Start one octave below middle
-  
-  // Add bass notes if selected
+  const agglomeratoMidi = (currentOctave + 1) * 12 + currentRoot; // Agglomerate starts one octave below middle
+  const bassMidi = (currentOctave - 1) * 12 + bassRoot; // Bass root two octaves below main octave
+
+  // Add bass notes based on selection (using independent bass root)
   if (currentBass === 'root') {
-    pitches.push(bassMidi - 24); // Root two octaves below
+    pitches.push(bassMidi);
   } else if (currentBass === 'fifth') {
-    pitches.push(bassMidi - 24); // Root
-    pitches.push(bassMidi - 24 + 7); // Fifth
+    pitches.push(bassMidi);
+    pitches.push(bassMidi + 7); // Fifth
   } else if (currentBass === 'fourth') {
-    pitches.push(bassMidi - 24); // Root
-    pitches.push(bassMidi - 24 + 5); // Fourth
+    pitches.push(bassMidi);
+    pitches.push(bassMidi + 5); // Fourth
   }
-  
+
   // Add agglomerato notes
-  let currentPitch = bassMidi;
+  let currentPitch = agglomeratoMidi;
   pitches.push(currentPitch);
-  
+
   currentAgglomerato.intervals.forEach(interval => {
     currentPitch += interval;
     pitches.push(currentPitch);
   });
-  
+
   return pitches;
 }
 
