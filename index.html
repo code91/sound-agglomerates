@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agglomerati Sonori Explorer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Agglomerati Sonori</h1>
+      <p class="subtitle">A Compositional Alternative to Chord Symbols</p>
+      <p class="author">Michele "Mike" Rubini</p>
+    </header>
+
+    <main>
+      <section class="controls">
+        <div class="control-group">
+          <label for="agglomerato-select">Agglomerato</label>
+          <select id="agglomerato-select"></select>
+        </div>
+
+        <div class="control-group">
+          <label for="root-select">Root Note</label>
+          <select id="root-select">
+            <option value="0">C</option>
+            <option value="1">C♯/D♭</option>
+            <option value="2">D</option>
+            <option value="3">E♭/D♯</option>
+            <option value="4">E</option>
+            <option value="5">F</option>
+            <option value="6">F♯/G♭</option>
+            <option value="7">G</option>
+            <option value="8">A♭/G♯</option>
+            <option value="9">A</option>
+            <option value="10">B♭/A♯</option>
+            <option value="11">B</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label>Bass</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="bass" value="none" checked>
+              <span>None</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="bass" value="root">
+              <span>Root</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="bass" value="fifth">
+              <span>Fifth (1–5)</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="bass" value="fourth">
+              <span>Fourth (1–4)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label for="octave-select">Octave</label>
+          <select id="octave-select">
+            <option value="3">3 (Low)</option>
+            <option value="4" selected>4 (Middle)</option>
+            <option value="5">5 (High)</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="display">
+        <div class="info-panel">
+          <div class="info-item">
+            <span class="info-label">Formula:</span>
+            <span id="formula" class="info-value">S.S.S</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Intervals:</span>
+            <span id="intervals" class="info-value">1-1-1</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Span:</span>
+            <span id="span" class="info-value">3 semitones</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Pitches:</span>
+            <span id="pitches" class="info-value">C–D♭–D–E♭</span>
+          </div>
+        </div>
+
+        <div class="keyboard-container">
+          <div id="keyboard" class="keyboard"></div>
+        </div>
+
+        <div class="play-controls">
+          <button id="play-btn" class="play-btn">
+            <span class="play-icon">▶</span> Play
+          </button>
+          <button id="arpeggiate-btn" class="play-btn">
+            <span class="play-icon">↗</span> Arpeggiate
+          </button>
+        </div>
+      </section>
+
+      <section class="about">
+        <h2>About</h2>
+        <p>
+          An <em>agglomerato sonoro</em> (sound agglomerate) is a cluster of pitches defined by 
+          intervallic relationships rather than functional harmonic identity. This tool allows 
+          you to explore the 95 valid agglomerati sonori and hear how they interact with 
+          different bass configurations.
+        </p>
+        <p>
+          <strong>Constraints:</strong> Four notes, within one octave (span &lt; 12 semitones), 
+          no uniform tertian stacking.
+        </p>
+        <p>
+          <strong>Intervals:</strong> S = semitone (1), T = tone (2), m3 = minor third (3), 
+          M3 = major third (4), 4 = perfect fourth (5).
+        </p>
+        <p class="paper-link">
+          Based on research from: <a href="#">"Agglomerati Sonori: A Compositional Alternative to Chord Symbols in Improvised Music"</a> (2025)
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 Michele "Mike" Rubini · <a href="https://music.mikerubini.com">music.mikerubini.com</a></p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
