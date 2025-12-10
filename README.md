@@ -25,7 +25,7 @@ These constraints produce **95 valid sound agglomerates**.
 
 ## Usage
 
-Visit: [https://code91.github.io/sound-agglomerates](https://mikerubini.github.io/agglomerati-sonori)
+Visit: [https://code91.github.io/sound-agglomerates](https://code91.github.io/sound-agglomerates)
 
 Or run locally:
 ```bash
