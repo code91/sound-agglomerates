@@ -3,7 +3,7 @@ import { AGGLOMERATI, NOTE_NAMES, NOTE_NAMES_FLAT, INTERVAL_NAMES } from './aggl
 // State
 let currentAgglomerato = AGGLOMERATI[0];
 let currentRoot = 0; // C
-let currentBass = 'none';
+let selectedBassNotes = []; // Array of selected bass note indices (0-11)
 let currentOctave = 4;
 let synth = null;
 
@@ -11,7 +11,7 @@ let synth = null;
 const agglomeratoSelect = document.getElementById('agglomerato-select');
 const rootSelect = document.getElementById('root-select');
 const octaveSelect = document.getElementById('octave-select');
-const bassRadios = document.querySelectorAll('input[name="bass"]');
+const bassNotesContainer = document.getElementById('bass-notes');
 const keyboard = document.getElementById('keyboard');
 const playBtn = document.getElementById('play-btn');
 const arpeggiateBtn = document.getElementById('arpeggiate-btn');
@@ -161,12 +161,20 @@ function setupEventListeners() {
     createKeyboard();
     updateDisplay();
   });
-  
-  bassRadios.forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      currentBass = e.target.value;
+
+  // Bass note checkboxes
+  bassNotesContainer.addEventListener('change', (e) => {
+    if (e.target.name === 'bass-note') {
+      const noteValue = parseInt(e.target.value);
+      if (e.target.checked) {
+        if (!selectedBassNotes.includes(noteValue)) {
+          selectedBassNotes.push(noteValue);
+        }
+      } else {
+        selectedBassNotes = selectedBassNotes.filter(n => n !== noteValue);
+      }
       updateDisplay();
-    });
+    }
   });
   
   playBtn.addEventListener('click', () => playChord());
@@ -185,27 +193,23 @@ function setupEventListeners() {
 function getCurrentPitches() {
   const pitches = [];
   const bassMidi = (currentOctave + 1) * 12 + currentRoot; // Start one octave below middle
-  
-  // Add bass notes if selected
-  if (currentBass === 'root') {
-    pitches.push(bassMidi - 24); // Root two octaves below
-  } else if (currentBass === 'fifth') {
-    pitches.push(bassMidi - 24); // Root
-    pitches.push(bassMidi - 24 + 7); // Fifth
-  } else if (currentBass === 'fourth') {
-    pitches.push(bassMidi - 24); // Root
-    pitches.push(bassMidi - 24 + 5); // Fourth
-  }
-  
+  const bassOctave = (currentOctave - 1) * 12; // Bass notes two octaves below main octave
+
+  // Add selected bass notes (sorted by pitch)
+  const sortedBassNotes = [...selectedBassNotes].sort((a, b) => a - b);
+  sortedBassNotes.forEach(noteIndex => {
+    pitches.push(bassOctave + noteIndex);
+  });
+
   // Add agglomerato notes
   let currentPitch = bassMidi;
   pitches.push(currentPitch);
-  
+
   currentAgglomerato.intervals.forEach(interval => {
     currentPitch += interval;
     pitches.push(currentPitch);
   });
-  
+
   return pitches;
 }
 
@@ -225,9 +229,7 @@ function updateDisplay() {
   });
   
   // Separate bass from agglomerato in display
-  let bassCount = 0;
-  if (currentBass === 'root') bassCount = 1;
-  else if (currentBass === 'fifth' || currentBass === 'fourth') bassCount = 2;
+  const bassCount = selectedBassNotes.length;
   
   const bassPitches = pitchNames.slice(0, bassCount);
   const aggPitches = pitchNames.slice(bassCount);

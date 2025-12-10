@@ -163,6 +163,63 @@ select:focus {
   display: none;
 }
 
+/* Bass Notes Grid */
+.bass-control {
+  grid-column: 1 / -1;
+}
+
+.bass-notes-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0.35rem;
+}
+
+.bass-note-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.25rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+  min-width: 0;
+}
+
+.bass-note-label:hover {
+  border-color: var(--accent);
+}
+
+.bass-note-label:has(input:checked) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.bass-note-label input {
+  display: none;
+}
+
+.bass-note-label span {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .bass-notes-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .bass-notes-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 /* Display Section */
 .display {
   background: var(--bg-secondary);
