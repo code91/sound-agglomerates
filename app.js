@@ -151,13 +151,13 @@ function getCurrentPitches() {
   
   // Add bass notes if selected
   if (currentBass === 'root') {
-    pitches.push(bassMidi - 12); // Root an octave below
+    pitches.push(bassMidi - 24); // Root two octaves below
   } else if (currentBass === 'fifth') {
-    pitches.push(bassMidi - 12); // Root
-    pitches.push(bassMidi - 12 + 7); // Fifth
+    pitches.push(bassMidi - 24); // Root
+    pitches.push(bassMidi - 24 + 7); // Fifth
   } else if (currentBass === 'fourth') {
-    pitches.push(bassMidi - 12); // Root
-    pitches.push(bassMidi - 12 + 5); // Fourth
+    pitches.push(bassMidi - 24); // Root
+    pitches.push(bassMidi - 24 + 5); // Fourth
   }
   
   // Add agglomerato notes
