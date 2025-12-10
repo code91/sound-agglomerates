@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 
+/* Dark theme (default) */
 :root {
   --bg-primary: #1a1a2e;
   --bg-secondary: #16213e;
@@ -17,6 +18,22 @@
   --black-key: #222;
   --black-key-active: #ff6b6b;
   --border-color: #333;
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --bg-primary: #f5f5f7;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e8e8ed;
+  --accent: #d63851;
+  --accent-hover: #e94560;
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --white-key: #ffffff;
+  --white-key-active: #e94560;
+  --black-key: #1d1d1f;
+  --black-key-active: #ff6b6b;
+  --border-color: #d2d2d7;
 }
 
 body {
@@ -34,6 +51,7 @@ body {
 }
 
 header {
+  position: relative;
   text-align: center;
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
@@ -356,6 +374,33 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  background: var(--bg-secondary);
+}
+
+.theme-toggle .theme-icon {
+  font-size: 1rem;
 }
 
 /* Responsive */
