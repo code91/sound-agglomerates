@@ -1,5 +1,7 @@
 # Sound Agglomerates Explorer
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17880983.svg)](https://doi.org/10.5281/zenodo.17880983)
+
 An interactive tool for exploring **sound agglomerates**, a compositional alternative to chord symbols in improvised music.
 
 ## What is a Sound Agglomerate?
