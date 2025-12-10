@@ -264,13 +264,21 @@ function highlightKeys(pitches, bassCount) {
 // Initialize Tone.js synth
 function initSynth() {
   if (!synth) {
-    synth = new Tone.PolySynth(Tone.Synth, {
-      oscillator: { type: 'triangle' },
+    synth = new Tone.PolySynth(Tone.FMSynth, {
+      harmonicity: 3,
+      modulationIndex: 10,
       envelope: {
         attack: 0.02,
         decay: 0.3,
         sustain: 0.4,
         release: 1
+      },
+      modulation: { type: 'square' },
+      modulationEnvelope: {
+        attack: 0.5,
+        decay: 0.1,
+        sustain: 0.2,
+        release: 0.5
       }
     }).toDestination();
     
