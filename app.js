@@ -22,8 +22,43 @@ const intervalsDisplay = document.getElementById('intervals');
 const spanDisplay = document.getElementById('span');
 const pitchesDisplay = document.getElementById('pitches');
 
+// Theme toggle
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = themeToggle.querySelector('.theme-icon');
+
+// Theme functions
+function initTheme() {
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  if (savedTheme) {
+    setTheme(savedTheme);
+  } else if (!prefersDark) {
+    setTheme('light');
+  } else {
+    setTheme('dark');
+  }
+}
+
+function setTheme(theme) {
+  if (theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    themeIcon.textContent = '🌙';
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    themeIcon.textContent = '☀️';
+  }
+  localStorage.setItem('theme', theme);
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  setTheme(currentTheme === 'light' ? 'dark' : 'light');
+}
+
 // Initialize
 function init() {
+  initTheme();
   populateAgglomeratoSelect();
   createKeyboard();
   setupEventListeners();
@@ -109,6 +144,8 @@ function createKeyboard() {
 
 // Setup event listeners
 function setupEventListeners() {
+  themeToggle.addEventListener('click', toggleTheme);
+
   agglomeratoSelect.addEventListener('change', (e) => {
     currentAgglomerato = AGGLOMERATI.find(a => a.id === parseInt(e.target.value));
     updateDisplay();
