@@ -42,58 +42,44 @@
           </select>
         </div>
 
-        <div class="control-group bass-control">
-          <label>Bass Notes</label>
-          <div id="bass-notes" class="bass-notes-grid">
-            <label class="bass-note-label">
-              <input type="checkbox" name="bass-note" value="0">
-              <span>C</span>
+        <div class="control-group">
+          <label>Bass</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="bass" value="none" checked>
+              <span>None</span>
             </label>
-            <label class="bass-note-label">
-              <input type="checkbox" name="bass-note" value="1">
-              <span>C♯</span>
+            <label class="radio-label">
+              <input type="radio" name="bass" value="root">
+              <span>Root</span>
             </label>
-            <label class="bass-note-label">
-              <input type="checkbox" name="bass-note" value="2">
-              <span>D</span>
+            <label class="radio-label">
+              <input type="radio" name="bass" value="fifth">
+              <span>Fifth (1–5)</span>
             </label>
-            <label class="bass-note-label">
-              <input type="checkbox" name="bass-note" value="3">
-              <span>E♭</span>
-            </label>
-            <label class="bass-note-label">
-              <input type="checkbox" name="bass-note" value="4">
-              <span>E</span>
-            </label>
-            <label class="bass-note-label">
-              <input type="checkbox" name="bass-note" value="5">
-              <span>F</span>
-            </label>
-            <label class="bass-note-label">
-              <input type="checkbox" name="bass-note" value="6">
-              <span>F♯</span>
-            </label>
-            <label class="bass-note-label">
-              <input type="checkbox" name="bass-note" value="7">
-              <span>G</span>
-            </label>
-            <label class="bass-note-label">
-              <input type="checkbox" name="bass-note" value="8">
-              <span>A♭</span>
-            </label>
-            <label class="bass-note-label">
-              <input type="checkbox" name="bass-note" value="9">
-              <span>A</span>
-            </label>
-            <label class="bass-note-label">
-              <input type="checkbox" name="bass-note" value="10">
-              <span>B♭</span>
-            </label>
-            <label class="bass-note-label">
-              <input type="checkbox" name="bass-note" value="11">
-              <span>B</span>
+            <label class="radio-label">
+              <input type="radio" name="bass" value="fourth">
+              <span>Fourth (1–4)</span>
             </label>
           </div>
+        </div>
+
+        <div class="control-group">
+          <label for="bass-root-select">Bass Root</label>
+          <select id="bass-root-select">
+            <option value="0">C</option>
+            <option value="1">C♯/D♭</option>
+            <option value="2">D</option>
+            <option value="3">E♭/D♯</option>
+            <option value="4">E</option>
+            <option value="5">F</option>
+            <option value="6">F♯/G♭</option>
+            <option value="7">G</option>
+            <option value="8">A♭/G♯</option>
+            <option value="9">A</option>
+            <option value="10">B♭/A♯</option>
+            <option value="11">B</option>
+          </select>
         </div>
 
         <div class="control-group">
