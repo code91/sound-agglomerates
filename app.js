@@ -1,4 +1,4 @@
-import { AGGLOMERATI, NOTE_NAMES, NOTE_NAMES_FLAT, INTERVAL_NAMES } from './agglomerati.js';
+import { AGGLOMERATI, NOTE_NAMES, NOTE_NAMES_FLAT, INTERVAL_NAMES, getChordQuality } from './agglomerati.js';
 
 // State
 let currentAgglomerato = AGGLOMERATI[0];
@@ -23,6 +23,7 @@ const formulaDisplay = document.getElementById('formula');
 const intervalsDisplay = document.getElementById('intervals');
 const spanDisplay = document.getElementById('span');
 const pitchesDisplay = document.getElementById('pitches');
+const chordQualityDisplay = document.getElementById('chord-quality');
 
 // Theme toggle
 const themeToggle = document.getElementById('theme-toggle');
@@ -223,7 +224,7 @@ function updateDisplay() {
   formulaDisplay.textContent = currentAgglomerato.name;
   intervalsDisplay.textContent = currentAgglomerato.intervals.join('-');
   spanDisplay.textContent = `${currentAgglomerato.span} semitones`;
-  
+
   // Calculate and display pitches
   const pitches = getCurrentPitches();
   const pitchNames = pitches.map(midi => {
@@ -231,23 +232,53 @@ function updateDisplay() {
     const octave = Math.floor(midi / 12) - 1;
     return NOTE_NAMES_FLAT[noteIndex] + octave;
   });
-  
+
   // Separate bass from agglomerato in display
   let bassCount = 0;
   if (currentBass === 'root') bassCount = 1;
   else if (currentBass === 'fifth' || currentBass === 'fourth') bassCount = 2;
-  
+
   const bassPitches = pitchNames.slice(0, bassCount);
   const aggPitches = pitchNames.slice(bassCount);
-  
+
   if (bassPitches.length > 0) {
     pitchesDisplay.textContent = `[${bassPitches.join('–')}] ${aggPitches.join('–')}`;
   } else {
     pitchesDisplay.textContent = aggPitches.join('–');
   }
-  
+
+  // Calculate and display chord quality
+  updateChordQuality(bassCount);
+
   // Update keyboard highlighting
   highlightKeys(pitches, bassCount);
+}
+
+// Calculate and display chord quality based on bass interval
+function updateChordQuality(bassCount) {
+  if (currentBass === 'none' || bassCount === 0) {
+    chordQualityDisplay.textContent = '—';
+    chordQualityDisplay.classList.remove('has-quality');
+    return;
+  }
+
+  // Calculate interval from bass root up to agglomerate root (in semitones)
+  const bassInterval = (currentRoot - bassRoot + 12) % 12;
+
+  // Get chord quality from mapping
+  const quality = getChordQuality(currentAgglomerato.name, bassInterval);
+
+  if (quality) {
+    // Display as: BassNote + Quality (e.g., "C Maj7" or "A m11")
+    const bassNoteName = NOTE_NAMES_FLAT[bassRoot];
+    chordQualityDisplay.textContent = `${bassNoteName}${quality}`;
+    chordQualityDisplay.classList.add('has-quality');
+  } else {
+    // No specific chord quality mapped for this combination
+    const bassNoteName = NOTE_NAMES_FLAT[bassRoot];
+    chordQualityDisplay.textContent = `${bassNoteName}/ (cluster)`;
+    chordQualityDisplay.classList.remove('has-quality');
+  }
 }
 
 // Highlight active keys on keyboard

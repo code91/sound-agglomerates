@@ -198,6 +198,21 @@ select:focus {
   font-family: 'SF Mono', 'Consolas', monospace;
 }
 
+/* Chord Quality styling */
+.chord-quality-item {
+  grid-column: span 2;
+}
+
+.chord-quality {
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.chord-quality.has-quality {
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
 /* Keyboard */
 .keyboard-container {
   overflow-x: auto;
